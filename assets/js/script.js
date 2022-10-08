@@ -45,7 +45,7 @@ function clearPlaylistContainerContent () {
 }
 
 (function populatePreexistingPlaylistContainer () {
-  if (Object.keys(JSON.parse(localStorage.getItem("playlistTimeline"))).includes(currentDay)) {
+  if (JSON.parse(localStorage.getItem("playlistTimeline")) && Object.keys(JSON.parse(localStorage.getItem("playlistTimeline"))).includes(currentDay)) {
   let pastPlaylistTimeline = JSON.parse(localStorage.getItem("playlistTimeline"))[currentDay]
 
     pastPlaylistTimeline.forEach(playlist => {
