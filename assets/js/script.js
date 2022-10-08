@@ -3,8 +3,20 @@ var inputContainerEl = document.getElementById('input-container');
 var submitButtonEl = document.getElementById('submit-button');
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
+var currentDay = moment().format('YYYY-MM-DD')
 
-// document.getElementById('content-parent').appendChild(playListContainerEl)
+var playlistCard = document.createElement('a')
+playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
+
+var playlistCardHeader = document.createElement('h4')
+var playlistCardImage = document.createElement('img')
+playlistCardHeader.className = 'playlistCard-header'
+playlistCardImage.setAttribute('height', '200px')
+playlistCardImage.setAttribute('width', '200px')
+
+document.getElementById('content-parent').appendChild(playListContainerEl)
+playlistCard.appendChild(playlistCardHeader)
+playlistCard.appendChild(playlistCardImage)
 
 
 const options = {
@@ -32,6 +44,21 @@ function clearPlaylistContainerContent () {
   }
 }
 
+(function populatePreexistingPlaylistContainer () {
+  if (Object.keys(JSON.parse(localStorage.getItem("playlistTimeline"))).includes(currentDay)) {
+  let pastPlaylistTimeline = JSON.parse(localStorage.getItem("playlistTimeline"))[currentDay]
+
+    pastPlaylistTimeline.forEach(playlist => {
+      var clone = playlistCard.cloneNode(true)
+      var playListCardElements = clone.childNodes
+      playListCardElements[0].innerText = playlist[0]
+      playListCardElements[1].setAttribute('src', playlist[1])
+      clone.setAttribute('href', playlist[2])
+      playListContainerEl.appendChild(clone)
+    })
+  }
+})()
+
 function grabPlaylists(emotion) {
   return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=10&numberOfTopResults=5`, options)
     .then(response => response.json())
@@ -41,33 +68,32 @@ function grabPlaylists(emotion) {
     .catch(err => console.error(err));
 }
 
+// using async, await to wait for results from api call and then store into the playlists variable
 async function injectPlaylistContainer(emotion) {
-  clearPlaylistContainerContent()
   var playlists;
   playlists = await grabPlaylists(emotion)
 
-  var playlistCard = document.createElement('a')
-  playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
+  console.log('currentPlaylist: ', playlists.items[0])
+  var playlistDatum = playlists.items[0].data
 
-  var playlistContainerHeader = document.createElement('h3')
-  playlistContainerHeader.textContent = `Playlist curated for mood: ${emotion}`
+  var clone = playlistCard.cloneNode(true)
 
-  var playlistCardHeader = document.createElement('h4')
-  var playlistCardImage = document.createElement('img')
+  var playListCardElements = clone.childNodes
+  playListCardElements[0].innerText = playlistDatum.name
+  playListCardElements[1].setAttribute('src', playlistDatum.images.items[0].sources[0].url)
+  clone.setAttribute('href', playlistDatum.uri)
+  playListContainerEl.prepend(clone)
 
-  document.getElementById('content-parent').appendChild(playListContainerEl)
-  playListContainerEl.appendChild(playlistContainerHeader)
-  playlistCard.appendChild(playlistCardHeader)
-  playlistCard.appendChild(playlistCardImage)
-  
-  playlists.items.forEach(playlist => {
-    console.log('each individual playlist datum: ', playlist)
-    var clone = playlistCard.cloneNode(true)
+  var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
 
-    var playListCardElements = clone.childNodes
-    playListCardElements[0].innerText = playlist.data.name
-    playListCardElements[1].setAttribute('src', playlist.data.images.items[0].sources[0].url)
-    playListContainerEl.appendChild(clone)
-  })
+
+  if (playlistTimeline[currentDay]) {
+    playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri])
+  } else {
+    playlistTimeline[currentDay] = [[playlistDatum.name, playlistDatum.images.items[0].sources[0].url]]
+  }
+  playlistTimeline[currentDay] ? playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri]) : 
+
+  localStorage.setItem("playlistTimeline", JSON.stringify(playlistTimeline))
 }
 
