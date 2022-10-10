@@ -22,7 +22,8 @@ playlistCard.appendChild(playlistCardImage)
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '0ab9cf3e17msh3dbe219cb411cedp18ddd9jsna2cb53035932',
+    // needs individual API keys in line below
+		'X-RapidAPI-Key': '',
 		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 	}
 };
