@@ -5,6 +5,8 @@ var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
 
+// console.log('currentDay: ', currentDay)
+
 var playlistCard = document.createElement('a')
 playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
 
@@ -47,6 +49,7 @@ function clearPlaylistContainerContent () {
 (function populatePreexistingPlaylistContainer () {
   if (JSON.parse(localStorage.getItem("playlistTimeline")) && Object.keys(JSON.parse(localStorage.getItem("playlistTimeline"))).includes(currentDay)) {
   let pastPlaylistTimeline = JSON.parse(localStorage.getItem("playlistTimeline"))[currentDay]
+  console.log('test: ', pastPlaylistTimeline)
 
     pastPlaylistTimeline.forEach(playlist => {
       var clone = playlistCard.cloneNode(true)
@@ -90,9 +93,10 @@ async function injectPlaylistContainer(emotion) {
   if (playlistTimeline[currentDay]) {
     playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri])
   } else {
-    playlistTimeline[currentDay] = [[playlistDatum.name, playlistDatum.images.items[0].sources[0].url]]
+    playlistTimeline[currentDay] = [[playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri]]
   }
-  playlistTimeline[currentDay] ? playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri]) : 
+  
+
 
   localStorage.setItem("playlistTimeline", JSON.stringify(playlistTimeline))
 }
