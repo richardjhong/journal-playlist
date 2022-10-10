@@ -1,0 +1,18 @@
+/*'Baseline color palette'*/
+:root {
+    --bistre: #251605
+    --copper: #C57B57
+    --tumbleweed: #F1AB86
+    --lightochre: #F7DBA7
+    --pewter: #9CAFB7
+
+}
+
+
+header{
+    font-family: 'Bad Script', cursive;
+}
+
+body {
+    background-color: --copper;
+}
