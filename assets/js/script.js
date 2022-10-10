@@ -1,9 +1,11 @@
 var inputEl = document.getElementById('text-input');
 var inputContainerEl = document.getElementById('input-container');
 var submitButtonEl = document.getElementById('submit-button');
+var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
+var quoteContainerEl = document.getElementById('quote-container')
 
 var playlistCard = document.createElement('a')
 playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
@@ -18,14 +20,25 @@ document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
+var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
+
 
 const options = {
-	method: 'GET',
-	headers: {
-    // needs individual API keys in line below
-		'X-RapidAPI-Key': '',
-		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
-	}
+  SpotifyAPI: {
+    method: 'GET',
+    headers: {
+      // needs individual API keys in line below
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+    }
+  },
+  Quotes: {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com'
+    }
+  }
 };
 
 inputContainerEl.addEventListener('click', async function(e) {
@@ -36,6 +49,10 @@ inputContainerEl.addEventListener('click', async function(e) {
     if (currentText.length > 0) {
       injectPlaylistContainer(currentText)   
     }
+  }
+
+  if (e.target.id === 'grab-new-quote-button') {
+    injectQuoteContainer()
   }
 })
 
@@ -63,7 +80,7 @@ function clearPlaylistContainerContent () {
 })()
 
 function grabPlaylists(emotion) {
-  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options)
+  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options.SpotifyAPI)
     .then(response => response.json())
     .then(response => {
       return response.playlists
@@ -103,5 +120,19 @@ async function injectPlaylistContainer(emotion) {
   }
   
   localStorage.setItem("playlistTimeline", JSON.stringify(playlistTimeline))
+}
+
+function grabInspirationalQuote() {
+  return fetch('https://famous-quotes4.p.rapidapi.com/random?category=inspirational&count=10', options.Quotes)
+	.then(response => response.json())
+	.then(response => { return response })
+	.catch(err => console.error(err));
+}
+
+async function injectQuoteContainer() {
+  let quotes = await grabInspirationalQuote()
+  let index = Math.floor(Math.random() * quotes.length)
+  let currentQuote = quotes[index]
+  quoteContainerEl.innerText = `${currentQuote.text} - ${currentQuote.author}`
 }
 
