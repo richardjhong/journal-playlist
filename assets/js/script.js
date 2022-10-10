@@ -5,8 +5,6 @@ var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
 
-// console.log('currentDay: ', currentDay)
-
 var playlistCard = document.createElement('a')
 playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
 
@@ -46,10 +44,11 @@ function clearPlaylistContainerContent () {
   }
 }
 
+// checks if any playlists are already saved in localStorage within the same 
+// date and populates the playlist container if so
 (function populatePreexistingPlaylistContainer () {
   if (JSON.parse(localStorage.getItem("playlistTimeline")) && Object.keys(JSON.parse(localStorage.getItem("playlistTimeline"))).includes(currentDay)) {
   let pastPlaylistTimeline = JSON.parse(localStorage.getItem("playlistTimeline"))[currentDay]
-  console.log('test: ', pastPlaylistTimeline)
 
     pastPlaylistTimeline.forEach(playlist => {
       var clone = playlistCard.cloneNode(true)
@@ -63,7 +62,7 @@ function clearPlaylistContainerContent () {
 })()
 
 function grabPlaylists(emotion) {
-  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=10&numberOfTopResults=5`, options)
+  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options)
     .then(response => response.json())
     .then(response => {
       return response.playlists
@@ -76,8 +75,11 @@ async function injectPlaylistContainer(emotion) {
   var playlists;
   playlists = await grabPlaylists(emotion)
 
-  console.log('currentPlaylist: ', playlists.items[0])
-  var playlistDatum = playlists.items[0].data
+  // playlists fetches 20 results; playlistDatum will grab a random playlist 
+  // within that selection. While there is a chance of duplicate playlist 
+  // entries, playlistDatum as it is setup should mitigate that possibility
+  let index = Math.floor(Math.random() * playlists.items.length)
+  var playlistDatum = playlists.items[index].data
 
   var clone = playlistCard.cloneNode(true)
 
@@ -89,15 +91,16 @@ async function injectPlaylistContainer(emotion) {
 
   var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
 
-
+  // if playlistTimeline[currentDay] already exists, then the current entry is 
+  // considered the newest and pushed to the beginning of the playlist; 
+  // otherwise this current entry is considered the first playlist entry of the 
+  // day and has data set for a 2d/nested array
   if (playlistTimeline[currentDay]) {
     playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri])
   } else {
     playlistTimeline[currentDay] = [[playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri]]
   }
   
-
-
   localStorage.setItem("playlistTimeline", JSON.stringify(playlistTimeline))
 }
 
