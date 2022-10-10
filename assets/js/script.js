@@ -94,7 +94,7 @@ async function injectPlaylistContainer(emotion) {
   // if playlistTimeline[currentDay] already exists, then the current entry is 
   // considered the newest and pushed to the beginning of the playlist; 
   // otherwise this current entry is considered the first playlist entry of the 
-  // day and has data set for a 2d/nested array
+  // day and has data set for a 2d/nested array.
   if (playlistTimeline[currentDay]) {
     playlistTimeline[currentDay].unshift([playlistDatum.name, playlistDatum.images.items[0].sources[0].url, playlistDatum.uri])
   } else {
