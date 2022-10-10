@@ -20,14 +20,13 @@ document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
-var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
-
+// needs individual API keys in line below
+// var apiKey = INSERT API KEY HERE
 
 const options = {
   SpotifyAPI: {
     method: 'GET',
     headers: {
-      // needs individual API keys in line below
       'X-RapidAPI-Key': apiKey,
       'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
     }
