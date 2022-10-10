@@ -1,0 +1,43 @@
+/*'Baseline color palette'*/
+:root {
+  --bistre: #251605
+  --copper: #C57B57
+  --tumbleweed: #F1AB86
+  --lightochre: #F7DBA7
+  --pewter: #9CAFB7
+
+}
+
+
+header{
+  font-family: 'Bad Script', cursive;
+}
+
+body {
+  background-color: --copper;
+}
+
+
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10px;
+}
+
+.playlistCard-header {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  align-items: center;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
