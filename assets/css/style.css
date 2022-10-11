@@ -23,6 +23,12 @@ body {
   background-color: --copper;
 }
 
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+
 
 .playlist-container {
   display: flex;
