@@ -26,10 +26,16 @@ body {
 }
 
 html {
-  /*background-image: url(../images/Old-Notebook.jpg);*/
+  /* background-image: url(../images/Old-Notebook.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
 }
 
 
