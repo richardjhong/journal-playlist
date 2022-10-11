@@ -44,6 +44,7 @@ html {
   flex-direction: column;
   align-items: flex-end;
   margin-right: 10px;
+  font-size: 32px;
 }
 
 .playlistCard-header {
