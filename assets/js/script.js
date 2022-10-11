@@ -111,7 +111,6 @@ async function grabPlaylists(emotion) {
   return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotionQuery}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options.SpotifyAPI)
     .then(response => response.json())
     .then(response => {
-      console.log('response within grabPlaylists: ', response)
       return response.playlists 
     })
     .catch(err => console.error(err));
