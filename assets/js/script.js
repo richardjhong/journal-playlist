@@ -5,7 +5,6 @@ const contentContainer = document.getElementById('container')
 
 var inputEl = document.getElementById('text-input');
 var inputContainerEl = document.getElementById('input-container');
-var submitButtonEl = document.getElementById('submit-button');
 var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
 //added 
 var playListContainerEl = document.createElement('div')
@@ -27,7 +26,7 @@ playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
 // needs individual API keys in line below
-var apiKey = INSERT API KEY HERE
+var apiKey = 'INSERT API KEY HERE'
 
 const options = {
   SpotifyAPI: {
@@ -57,21 +56,13 @@ const options = {
 inputContainerEl.addEventListener('click', async function(e) {
   e.preventDefault()
 
-  if (e.target.id === 'submit-button') {
-    var currentText = inputEl.value
-    if (currentText.length > 0) {
-      injectPlaylistContainer(currentText)   
-    }
-  }
-
   if (e.target.id === 'grab-new-quote-button') {
     injectQuoteContainer()
   }
 
   let textAreaInput = textArea.value
   if (e.target.id === 'fetch-button'){
-      console.log(textAreaInput)
-  grabStrongestEmotion(textAreaInput);
+    injectPlaylistContainer(textAreaInput)
   }
 
 })
@@ -86,12 +77,10 @@ function grabEmotions(textInput) {
 
 async function grabStrongestEmotion(textInput) {
   let emotionScores = await grabEmotions(textInput);
-  console.log('emotionScores: ', emotionScores);
   let scores = Object.values(emotionScores);
   let maxScore = Math.max(...scores)
-  console.log('maxScore: ', maxScore);
   let strongestEmotion = Object.keys(emotionScores).filter(key => emotionScores[key] === maxScore)
-  console.log(strongestEmotion); 
+  return strongestEmotion[0]
 }
 
 function clearPlaylistContainerContent () {
@@ -117,11 +106,13 @@ function clearPlaylistContainerContent () {
   }
 })()
 
-function grabPlaylists(emotion) {
-  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotion}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options.SpotifyAPI)
+async function grabPlaylists(emotion) {
+  let emotionQuery = await grabStrongestEmotion(emotion)
+  return fetch(`https://spotify23.p.rapidapi.com/search/?q=${emotionQuery}&type=multi&offset=0&limit=20&numberOfTopResults=5`, options.SpotifyAPI)
     .then(response => response.json())
     .then(response => {
-      return response.playlists
+      console.log('response within grabPlaylists: ', response)
+      return response.playlists 
     })
     .catch(err => console.error(err));
 }
