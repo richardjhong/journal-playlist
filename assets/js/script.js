@@ -42,7 +42,7 @@ inputContainerEl.addEventListener("click", function(event){
   })
 
 // needs individual API keys in line below
-// var apiKey = 
+var apiKey = 'INSERT API KEY HERE'
 
 const options = {
   SpotifyAPI: {
