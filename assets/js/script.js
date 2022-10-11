@@ -13,13 +13,17 @@ var currentDay = moment().format('YYYY-MM-DD')
 var quoteContainerEl = document.getElementById('quote-container')
 
 var playlistCard = document.createElement('a')
-playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard")
+playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard has-background-white-ter")
 
 var playlistCardHeader = document.createElement('h4')
 var playlistCardImage = document.createElement('img')
 playlistCardHeader.className = 'playlistCard-header'
-playlistCardImage.setAttribute('height', '200px')
-playlistCardImage.setAttribute('width', '200px')
+// playlistCardImage.setAttribute('height', '200px')
+// playlistCardImage.setAttribute('width', '200px')
+playlistCardImage.setAttribute(
+  'style',
+  'height: 350px, width: 300px'
+);
 
 document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
