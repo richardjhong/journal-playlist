@@ -1,3 +1,29 @@
+/*'Baseline color palette'*/
+:root {
+  --bistre: #251605
+  --copper: #C57B57
+  --tumbleweed: #F1AB86
+  --lightochre: #F7DBA7
+  --pewter: #9CAFB7
+
+}
+
+/* Adjusted header to set format of links to the left */
+header{
+  font-family: 'Bad Script', cursive;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+  background-color: black;
+  color: white;
+}
+
+body {
+  background-color: --copper;
+}
+
+
 .playlist-container {
   display: flex;
   flex-direction: column;
@@ -20,4 +46,51 @@
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Button class for the nav button in the header */
+.btn {
+  color: white;
+  background-color: unset;
+  height: 60px;
+  width: 90px;
+  padding: 2px;
+  text-decoration: none;
+}
+
+/* nav class */
+.nav {
+  background-color: unset;
+  overflow: auto;
+  justify-content: end;
+}
+
+/* Increasing header fint size */
+header h1 {
+  font-size: 200%;
+}
+
+/* Coloring links */
+.one {
+  color: green;
+}
+
+.two {
+  color: red;
+}
+
+.three {
+  color: blue;
+}
+
+.four {
+  color: purple;
+}
+
+.five {
+  color: yellow;
+}
+
+.six {
+  color: orange;
 }

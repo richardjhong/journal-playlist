@@ -1,7 +1,13 @@
+const userContainer = document.getElementById('users')
+const button = document.getElementById('fetch-button')
+const textArea = document.getElementById('textarea')
+const contentContainer = document.getElementById('container')
+
 var inputEl = document.getElementById('text-input');
 var inputContainerEl = document.getElementById('input-container');
 var submitButtonEl = document.getElementById('submit-button');
 var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
+//added 
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
@@ -21,7 +27,7 @@ playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
 // needs individual API keys in line below
-// var apiKey = INSERT API KEY HERE
+var apiKey = INSERT API KEY HERE
 
 const options = {
   SpotifyAPI: {
@@ -37,7 +43,15 @@ const options = {
       'X-RapidAPI-Key': apiKey,
       'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com'
     }
+  },
+  EmotionalAPI: {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'twinword-emotion-analysis-v1.p.rapidapi.com'
+    }
   }
+
 };
 
 inputContainerEl.addEventListener('click', async function(e) {
@@ -53,7 +67,32 @@ inputContainerEl.addEventListener('click', async function(e) {
   if (e.target.id === 'grab-new-quote-button') {
     injectQuoteContainer()
   }
+
+  let textAreaInput = textArea.value
+  if (e.target.id === 'fetch-button'){
+      console.log(textAreaInput)
+  grabStrongestEmotion(textAreaInput);
+  }
+
 })
+
+// API
+function grabEmotions(textInput) {
+  return fetch('https://twinword-emotion-analysis-v1.p.rapidapi.com/analyze/?text=' + textInput, options.EmotionalAPI)
+    .then(response => response.json())
+    .then(response => {return response.emotion_scores})
+    .catch(err => console.error(err));
+}
+
+async function grabStrongestEmotion(textInput) {
+  let emotionScores = await grabEmotions(textInput);
+  console.log('emotionScores: ', emotionScores);
+  let scores = Object.values(emotionScores);
+  let maxScore = Math.max(...scores)
+  console.log('maxScore: ', maxScore);
+  let strongestEmotion = Object.keys(emotionScores).filter(key => emotionScores[key] === maxScore)
+  console.log(strongestEmotion); 
+}
 
 function clearPlaylistContainerContent () {
   while (playListContainerEl.firstChild) {  
@@ -128,6 +167,13 @@ function grabInspirationalQuote() {
 	.catch(err => console.error(err));
 }
 
+
+// grabInspirationQuote within injectQuoteContainer gives array of quotes, 
+// injectNewQuote randomizes one of those quotes to display and then removes 
+// from the selection pool. This repeats every 30 seconds until there are no 
+// quotes left. the setTimeout within injectQuoteContainer meanwhile repeats 
+// the process from the beginning every 5 minutes i.e. after all 10 of the 
+// previous quotes have been displayed.
 function injectNewQuote(quotes) {
   let index = Math.floor(Math.random() * quotes.length)
   let currentQuote = quotes[index]

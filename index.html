@@ -1,30 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Journal Playlist</title>
-  </head>
 
-  <body>
-    <header class="jumbotron">
-      <h1 class="display-3">Journal Playlist</h1>
-      <p class="quote-container" id="quote-container">Placeholder for incoming quote</p>
-    </header>
-    <div class="container-fluid" id="form-container">
-      <div class="row" id="content-parent">
-        <div class="input-container" id="input-container">
-          <input type="text" id="text-input" class="input-field">
-          <button id="submit-button">SUBMIT</button>
-          <button id="grab-new-quote-button">NEW QUOTE</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="preconnect " href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Bad+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Journal Playlist</title>
+</head>
+
+<body>
+  <header>
+    <h1>How are you feeling today?</h1>
+    <div class="nav">
+      <a href="#joy" class="btn one">Joy</a>
+      <a href="#anger" class="btn two">Angry</a>
+      <a href="#sadness" class="btn three">Sad</a>
+      <a href="#disgust" class="btn four">Disgusted</a>
+      <a href="#fear" class="btn five">Afraid</a>
+      <a href="#surprise" class="btn six">Surprised</a>
+    </div>
+
+  </header>
+  <aside class="column is-full">
+    <h1 class="display-3">Journal Playlist</h1>
+    <p class="quote-container" id="quote-container">Placeholder for incoming quote</p>
+  </aside>
+
+  <div class="container-fluid" id="form-container">
+    <div class="row" id="content-parent">
+      <div class="input-container" id="input-container">
+        <input type="text" id="text-input" class="input-field">
+        <button id="submit-button">SUBMIT</button>
+        <button id="grab-new-quote-button">NEW QUOTE</button>
+        <div>
+          <textarea name="" id="textarea" cols="30" rows="10"></textarea>
+          <button class="btn-emotional-text btn-danger" id="fetch-button">Click Me</button>
         </div>
+        <div class="flex-column" id="users"></div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./assets/js/script.js"></script>
-  </body>
+  </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+      <script src="./assets/js/script.js"></script>
+</body>
+
 </html>
