@@ -128,12 +128,26 @@ function grabInspirationalQuote() {
 	.catch(err => console.error(err));
 }
 
-(async function injectQuoteContainer() {
-  let quotes = await grabInspirationalQuote()
+function injectNewQuote(quotes) {
   let index = Math.floor(Math.random() * quotes.length)
   let currentQuote = quotes[index]
   quoteContainerEl.innerText = `${currentQuote.text} - ${currentQuote.author}`
 
-  setTimeout(injectQuoteContainer, 30000);
-})()
+  quotes.splice(index , 1)
 
+  if (quotes.length < 1) {
+    return
+  }
+
+  setTimeout(() => {
+    injectNewQuote(quotes)
+  }, 30000)
+}
+
+async function injectQuoteContainer() {
+  let quotes = await grabInspirationalQuote()
+  
+  injectNewQuote(quotes)
+
+  setTimeout(injectQuoteContainer, 300000);
+}
