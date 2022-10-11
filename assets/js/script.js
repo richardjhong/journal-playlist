@@ -26,19 +26,8 @@ document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
-//added
-inputContainerEl.addEventListener("click", function(event){
-
-  let currentText = textArea.value
-  if (event.target.id === 'fetch-button'){
-  grabStrongestEmotion(currentText);
-  }
-  
-  
-  })
-
 // needs individual API keys in line below
-var apiKey = '6650c3f23amsh5d344be378e5449p1f32bcjsn898396e2adb8'
+var apiKey = INSERT API KEY HERE
 
 const options = {
   SpotifyAPI: {
@@ -75,9 +64,9 @@ inputContainerEl.addEventListener('click', async function(e) {
     }
   }
 
-  // if (e.target.id === 'grab-new-quote-button') {
-  //   injectQuoteContainer()
-  // }
+  if (e.target.id === 'grab-new-quote-button') {
+    injectQuoteContainer()
+  }
 
   let textAreaInput = textArea.value
   if (e.target.id === 'fetch-button'){
@@ -171,20 +160,40 @@ async function injectPlaylistContainer(emotion) {
   localStorage.setItem("playlistTimeline", JSON.stringify(playlistTimeline))
 }
 
-// function grabInspirationalQuote() {
-//   return fetch('https://famous-quotes4.p.rapidapi.com/random?category=inspirational&count=10', options.Quotes)
-// 	.then(response => response.json())
-// 	.then(response => { return response })
-// 	.catch(err => console.error(err));
-// }
-
-// (async function injectQuoteContainer() {
-//   let quotes = await grabInspirationalQuote()
-//   let index = Math.floor(Math.random() * quotes.length)
-//   let currentQuote = quotes[index]
-//   quoteContainerEl.innerText = `${currentQuote.text} - ${currentQuote.author}`
-
-//   setTimeout(injectQuoteContainer, 30000);
-// })()
+function grabInspirationalQuote() {
+  return fetch('https://famous-quotes4.p.rapidapi.com/random?category=inspirational&count=10', options.Quotes)
+	.then(response => response.json())
+	.then(response => { return response })
+	.catch(err => console.error(err));
+}
 
 
+// grabInspirationQuote within injectQuoteContainer gives array of quotes, 
+// injectNewQuote randomizes one of those quotes to display and then removes 
+// from the selection pool. This repeats every 30 seconds until there are no 
+// quotes left. the setTimeout within injectQuoteContainer meanwhile repeats 
+// the process from the beginning every 5 minutes i.e. after all 10 of the 
+// previous quotes have been displayed.
+function injectNewQuote(quotes) {
+  let index = Math.floor(Math.random() * quotes.length)
+  let currentQuote = quotes[index]
+  quoteContainerEl.innerText = `${currentQuote.text} - ${currentQuote.author}`
+
+  quotes.splice(index , 1)
+
+  if (quotes.length < 1) {
+    return
+  }
+
+  setTimeout(() => {
+    injectNewQuote(quotes)
+  }, 30000)
+}
+
+async function injectQuoteContainer() {
+  let quotes = await grabInspirationalQuote()
+  
+  injectNewQuote(quotes)
+
+  setTimeout(injectQuoteContainer, 300000);
+}
