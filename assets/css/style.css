@@ -218,5 +218,10 @@ header h1 {
   font-size: 120%;
 }
 
-
+#blurb {
+  text-align: center;
+  color: var(--bistre);
+  font-family: 'Bad Script', cursive;
+  font-size: 50%;
+}
 
