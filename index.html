@@ -35,17 +35,31 @@
     <div class="row" id="content-parent">
       <div class="input-container" id="input-container">
         <button id="grab-new-quote-button">NEW QUOTE</button>
+        <button class="js-modal-trigger" data-target="doughnut-chart-modal" id="chart-modal-button">
+          Open Chart
+        </button>
         <div>
           <textarea name="" id="textarea" cols="30" rows="10"></textarea>
           <button class="btn-emotional-text btn-danger" id="fetch-button">Click Me</button>
         </div>
       </div>
-        <div class="flex-column" id="users"></div>
+      <div class="flex-column" id="users"></div>
       </div>
     </div>
   </div>
 
+  <div id="doughnut-chart-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <canvas id="myChart" width="500" height="500"></canvas>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+
+  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 
