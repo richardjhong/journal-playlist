@@ -36,6 +36,31 @@ html {
   display: flex;
   justify-content: space-between;
   margin: 10px auto;
+  margin-top: 50px;
+}
+
+.col1 {
+  width: 20%;
+  margin-left: 10px;
+}
+.col2 {
+  width: 50%;
+}
+
+.col3 {
+  width: 20%;
+}
+
+h2 {
+  font-size: 300%;
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
 }
 
 
