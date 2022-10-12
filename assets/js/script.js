@@ -2,6 +2,7 @@ const userContainer = document.getElementById('users')
 const button = document.getElementById('fetch-button')
 const textArea = document.getElementById('textarea')
 const contentContainer = document.getElementById('container')
+const ctx = document.getElementById('myChart');
 
 var inputEl = document.getElementById('text-input');
 var inputContainerEl = document.getElementById('input-container');
@@ -21,7 +22,7 @@ playlistCardImage.className = 'playlistCard-image'
 
 playlistCardImage.setAttribute(
   'style',
-  'height: 350px, width: 300px'
+  'height: 350px; width: 300px'
 );
 
 document.getElementById('content-parent').appendChild(playListContainerEl)
@@ -87,6 +88,12 @@ inputContainerEl.addEventListener('click', async function(e) {
   }
 })
 
+if (localStorage.getItem("emotionCollection")) {
+  updateChart()
+  document.getElementById('chart-modal-button').style.display = "block"
+}
+
+
 // API
 function grabEmotions(textInput) {
   return fetch('https://twinword-emotion-analysis-v1.p.rapidapi.com/analyze/?text=' + textInput, options.EmotionalAPI)
@@ -100,6 +107,32 @@ async function grabStrongestEmotion(textInput) {
   let scores = Object.values(emotionScores);
   let maxScore = Math.max(...scores)
   let strongestEmotion = Object.keys(emotionScores).filter(key => emotionScores[key] === maxScore)
+  var emotionCollection = JSON.parse(localStorage.getItem("emotionCollection")) || {}
+
+  if (Object.keys(emotionCollection).length === 0 || emotionCollection[currentDay] === undefined) {
+    emotionCollection[currentDay] = {}
+  } 
+  if (emotionCollection[currentDay][strongestEmotion[0].toUpperCase()]) {
+    emotionCollection[currentDay][strongestEmotion[0].toUpperCase()]++ 
+  } else {
+    emotionCollection[currentDay][strongestEmotion[0].toUpperCase()] = 1
+  }
+  localStorage.setItem("emotionCollection", JSON.stringify(emotionCollection))
+
+  updateChart()
+
+  // Bulma modal boilerplate code adds evenListeners based on 
+  // 'DOMContentLoaded'. To not disturb its behavior, chart-modal-button
+  // initially starts with display: none. This evaluation checks if 
+  // the button is still hidden and makes it visible 
+  
+  var style = window.getComputedStyle(document.getElementById('chart-modal-button'))
+
+  if (style.display === 'none') {
+    document.getElementById('chart-modal-button').style.display = "block"
+  }
+
+
   return strongestEmotion[0]
 }
 
@@ -214,3 +247,123 @@ async function injectQuoteContainer() {
   setTimeout(injectQuoteContainer, 300000);
 }
 
+// boilerplate code associated with Bulma modal, function addData and onwards 
+// are created to handle creation of chart and updating chart
+document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) { // Escape key
+      closeAllModals();
+    }
+  });
+});
+
+function removeData(chart) {
+  while (chart.config.data.datasets[0].data.length > 0) {
+    chart.config.data.datasets[0].data.pop()
+  }
+  chart.update();
+}
+
+function addData(chart, emotionCollection) {
+  chart.data.datasets[0].data.push(emotionCollection['JOY'] || 0)
+  chart.data.datasets[0].data.push(emotionCollection['ANGER'] || 0)
+  chart.data.datasets[0].data.push(emotionCollection['SADNESS'] || 0)
+  chart.data.datasets[0].data.push(emotionCollection['DISGUST'] || 0)
+  chart.data.datasets[0].data.push(emotionCollection['FEAR'] || 0)
+  chart.data.datasets[0].data.push(emotionCollection['SURPRISE'] || 0)
+  chart.update();
+}
+
+function updateChart() {
+  var emotionCollection = JSON.parse(localStorage.getItem("emotionCollection"))[currentDay]
+  let existingChart = Chart.getChart(ctx)
+  
+  // checks if there is an existingChart within the canvas of ctx
+  // if not then a chart is created and attached to canvas ctx which 
+  // is nested in the modal in index.html
+  // if existingChart exists then chart data is removed and then added with new 
+  // dataset based on removeData and addData functions
+  if (existingChart === undefined) {
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            'JOY',
+            'ANGER',
+            'SADNESS',
+            'DISGUST',
+            'FEAR',
+            'SURPRISE'
+          ],
+          datasets: [{
+            label: 'Emotions Score Tally',
+            data: [
+              emotionCollection['JOY'] || 0,
+              emotionCollection['ANGER'] || 0,
+              emotionCollection['SADNESS'] || 0,
+              emotionCollection['DISGUST'] || 0,
+              emotionCollection['FEAR'] || 0,
+              emotionCollection['SURPRISE'] || 0,
+            ],
+            backgroundColor: [
+              'rgb(0,128,0)',
+              'rgb(255,0,0)',
+              'rgb(17,29,255)',
+              'rgb(128,1,128)',
+              'rgb(254,253,1)',
+              'rgb(255,165,2)'
+            ],
+            hoverOffset: 4
+          }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    }); 
+  } 
+  else {
+    removeData(existingChart)
+    addData(existingChart, emotionCollection)
+  }
+}
