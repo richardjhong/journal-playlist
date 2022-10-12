@@ -21,7 +21,7 @@ playlistCardImage.className = 'playlistCard-image'
 
 playlistCardImage.setAttribute(
   'style',
-  'height: 350px, width: 300px'
+  'height: 350px; width: 300px'
 );
 
 document.getElementById('content-parent').appendChild(playListContainerEl)
