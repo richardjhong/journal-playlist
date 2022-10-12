@@ -14,7 +14,7 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 1%;
-  background-color: var(--bistre);
+  background: linear-gradient(90deg, var(--bistre) 0%, var(--copper) 100%);
   color: var(--pewter);
 }
 
@@ -36,6 +36,31 @@ html {
   display: flex;
   justify-content: space-between;
   margin: 10px auto;
+  margin-top: 50px;
+}
+
+.col1 {
+  width: 20%;
+  margin-left: 10px;
+}
+.col2 {
+  width: 50%;
+}
+
+.col3 {
+  width: 20%;
+}
+
+h2 {
+  font-size: 300%;
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
 }
 
 
@@ -78,7 +103,8 @@ html {
 .nav {
   background-color: unset;
   overflow: auto;
-  justify-content: end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 /* Increasing header font size */
@@ -187,3 +213,15 @@ header h1 {
 #chart-modal-button {
   display: none;
 }
+
+#fetch-button{
+  background-color: var(--tumbleweed);
+  border-radius: 6px;
+  border-color: var(--pewter);
+  font-family: 'Amatic SC', cursive;
+  font-weight: bolder;
+  font-size: 120%;
+}
+
+
+

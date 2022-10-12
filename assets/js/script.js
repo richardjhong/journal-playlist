@@ -44,7 +44,7 @@ skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
-var apiKey = 'INSERT API KEY HERE'
+var apiKey = 'PLACE API KEY HERE'
 
 const options = {
   SpotifyAPI: {
@@ -78,10 +78,13 @@ inputContainerEl.addEventListener('click', async function(e) {
   }
 
   let textAreaInput = textArea.value
-  if (e.target.id === 'fetch-button'){
+  if (e.target.id === 'fetch-button', textAreaInput != ""){
     var skelClone = skeletonCard.cloneNode(true)
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
+  } else {
+    console.log("You have to write your thoughts before you can get a playlist!");
+    textArea.setAttribute("placeholder", "You must write your thoughts before getting a playlist!");
   }
 })
 
