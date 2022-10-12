@@ -6,7 +6,6 @@ const contentContainer = document.getElementById('container')
 var inputEl = document.getElementById('text-input');
 var inputContainerEl = document.getElementById('input-container');
 var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
-//added 
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
@@ -18,8 +17,8 @@ playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard has-backgro
 var playlistCardHeader = document.createElement('h4')
 var playlistCardImage = document.createElement('img')
 playlistCardHeader.className = 'playlistCard-header'
-// playlistCardImage.setAttribute('height', '200px')
-// playlistCardImage.setAttribute('width', '200px')
+playlistCardImage.className = 'playlistCard-image'
+
 playlistCardImage.setAttribute(
   'style',
   'height: 350px, width: 300px'
@@ -28,6 +27,20 @@ playlistCardImage.setAttribute(
 document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
+
+
+// skeletonCard is used for visual confirmation that a new playlist is being 
+// added to playlistTimeline; after data is retrieved from API fetches element 
+// tag attributes are replaced to replicate those of playlistCard
+var skeletonCard = document.createElement('a')
+skeletonCard.classList.add('skeleton-card-template')
+var skeletonHeader = document.createElement('h4')
+skeletonHeader.classList.add('skeleton-card', 'skeleton-card-text')
+var skeletonImage = document.createElement('img')
+skeletonImage.classList.add('skeleton-card', 'skeleton-card-img')
+
+skeletonCard.appendChild(skeletonHeader)
+skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
 var apiKey = 'INSERT API KEY HERE'
@@ -54,7 +67,6 @@ const options = {
       'X-RapidAPI-Host': 'twinword-emotion-analysis-v1.p.rapidapi.com'
     }
   }
-
 };
 
 inputContainerEl.addEventListener('click', async function(e) {
@@ -66,9 +78,10 @@ inputContainerEl.addEventListener('click', async function(e) {
 
   let textAreaInput = textArea.value
   if (e.target.id === 'fetch-button'){
+    var skelClone = skeletonCard.cloneNode(true)
+    playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
   }
-
 })
 
 // API
@@ -101,9 +114,9 @@ function clearPlaylistContainerContent () {
 
     pastPlaylistTimeline.forEach(playlist => {
       var clone = playlistCard.cloneNode(true)
-      var playListCardElements = clone.childNodes
-      playListCardElements[0].innerText = playlist[0]
-      playListCardElements[1].setAttribute('src', playlist[1])
+      var [playListCardHeader, playListCardImage] = clone.childNodes
+      playListCardHeader.innerText = playlist[0]
+      playListCardImage.setAttribute('src', playlist[1])
       clone.setAttribute('href', playlist[2])
       playListContainerEl.appendChild(clone)
     })
@@ -131,13 +144,20 @@ async function injectPlaylistContainer(emotion) {
   let index = Math.floor(Math.random() * playlists.items.length)
   var playlistDatum = playlists.items[index].data
 
-  var clone = playlistCard.cloneNode(true)
+  // the first appended child whenever a user clicks fetch-button within 
+  // eventListener will be a skeleton card
+  var loadedCard = playListContainerEl.firstChild
+  
+  // previous element attributes of loadedCard from when it assumed 
+  // skeletonCard role are replaced to those of a playlistCard now
+  loadedCard.className = "card h-100 p-3 my-3 playlistCard"
 
-  var playListCardElements = clone.childNodes
-  playListCardElements[0].innerText = playlistDatum.name
-  playListCardElements[1].setAttribute('src', playlistDatum.images.items[0].sources[0].url)
-  clone.setAttribute('href', playlistDatum.uri)
-  playListContainerEl.prepend(clone)
+  var [playListCardHeader, playListCardImage] = loadedCard.childNodes
+  playListCardHeader.className = 'playlistCard-header'
+  playListCardHeader.innerText = playlistDatum.name
+  playListCardImage.className = 'playlistCard-image'
+  playListCardImage.setAttribute('src', playlistDatum.images.items[0].sources[0].url)
+  loadedCard.setAttribute('href', playlistDatum.uri)
 
   var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
 
@@ -160,7 +180,6 @@ function grabInspirationalQuote() {
 	.then(response => { return response })
 	.catch(err => console.error(err));
 }
-
 
 // grabInspirationQuote within injectQuoteContainer gives array of quotes, 
 // injectNewQuote randomizes one of those quotes to display and then removes 
