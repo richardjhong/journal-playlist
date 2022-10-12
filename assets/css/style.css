@@ -103,7 +103,8 @@ textarea {
 .nav {
   background-color: unset;
   overflow: auto;
-  justify-content: end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 /* Increasing header font size */
