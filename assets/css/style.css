@@ -14,7 +14,7 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 1%;
-  background-color: var(--bistre);
+  background: linear-gradient(90deg, var(--bistre) 0%, var(--copper) 100%);
   color: var(--pewter);
 }
 
@@ -208,4 +208,15 @@ header h1 {
   margin-right: 1rem;
   flex-shrink: 0;
 }
+
+#fetch-button{
+  background-color: var(--tumbleweed);
+  border-radius: 6px;
+  border-color: var(--pewter);
+  font-family: 'Amatic SC', cursive;
+  font-weight: bolder;
+  font-size: 120%;
+}
+
+
 
