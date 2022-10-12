@@ -94,3 +94,61 @@ header h1 {
 .six {
   color: orange;
 }
+
+.skeleton-card {
+  background-color: white;
+  opacity: .7;
+  animation: skeleton-card-loading 1s linear infinite alternate;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  align-items: center;
+}
+
+.skeleton-card-text {
+  height: .5rem;
+  width: 250px;
+  margin-bottom: .25rem;
+  border-radius: .125rem;
+}
+
+@keyframes skeleton-card-loading {
+  0% {
+    background-color: hsl(200, 20%, 70%);
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.sample-card {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  padding: 16px;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  align-items: center;
+}
+
+.sample-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+/* .sample-title {
+  font-weight: bold;
+  font-size: 1.6rem;
+  text-transform: capitalize;
+  word-wrap: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-grow: 1;
+} */
