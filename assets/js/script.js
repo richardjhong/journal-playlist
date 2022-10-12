@@ -78,13 +78,21 @@ inputContainerEl.addEventListener('click', async function(e) {
   }
 
   let textAreaInput = textArea.value
-  if (e.target.id === 'fetch-button', textAreaInput != ""){
+  if (e.target.id === 'fetch-button', textArea.value != ""){
     var skelClone = skeletonCard.cloneNode(true)
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
-  } else {
-    console.log("You have to write your thoughts before you can get a playlist!");
-    textArea.setAttribute("placeholder", "You must write your thoughts before getting a playlist!");
+  } 
+})
+
+//Decoupled the event listner for the log button from the input container so as to not be called when clicking anything else
+button.addEventListener('click', async function(e){
+  e.preventDefault()
+
+  if (e.target.id === 'fetch-button', textArea.value === ""){
+    console.log("You must input a journal entry to evaluate first before ");
+    textArea.setAttribute('placeholder', "You must input a journal entry to evaluate before generating a playlist!")
+
   }
 })
 
