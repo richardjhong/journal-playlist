@@ -1,11 +1,10 @@
 /*'Baseline color palette'*/
 :root {
-  --bistre: #251605
-  --copper: #C57B57
-  --tumbleweed: #F1AB86
-  --lightochre: #F7DBA7
-  --pewter: #9CAFB7
-
+  --bistre: #251605;
+  --copper: #C57B57;
+  --tumbleweed: #F1AB86;
+  --lightochre: #F7DBA7;
+  --pewter: #9CAFB7;
 }
 
 /* Adjusted header to set format of links to the left */
@@ -15,12 +14,28 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 1%;
-  background-color: black;
-  color: white;
+  background-color: var(--bistre);
+  color: var(--pewter);
 }
 
 body {
-  background-color: --copper;
+  font-family: 'Amatic SC', cursive;
+  font-size: 120%;
+  font-weight: bolder;
+  
+}
+
+html {
+  /* background-image: url(../images/Old-Notebook.jpg); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
 }
 
 
@@ -29,6 +44,7 @@ body {
   flex-direction: column;
   align-items: flex-end;
   margin-right: 10px;
+  font-size: 32px;
 }
 
 .playlistCard-header {
@@ -65,7 +81,7 @@ body {
   justify-content: end;
 }
 
-/* Increasing header fint size */
+/* Increasing header font size */
 header h1 {
   font-size: 200%;
 }
@@ -93,6 +109,32 @@ header h1 {
 
 .six {
   color: orange;
+}
+
+.bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -1;
+}
+.bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
+
+#page-wrap{
+  position: relative;
+  z-index: 2;
 }
 
 .skeleton-card {
@@ -142,13 +184,3 @@ header h1 {
   flex-shrink: 0;
 }
 
-/* .sample-title {
-  font-weight: bold;
-  font-size: 1.6rem;
-  text-transform: capitalize;
-  word-wrap: none;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  flex-grow: 1;
-} */
