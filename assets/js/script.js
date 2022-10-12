@@ -17,6 +17,7 @@ playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard has-backgro
 var playlistCardHeader = document.createElement('h4')
 var playlistCardImage = document.createElement('img')
 playlistCardHeader.className = 'playlistCard-header'
+playlistCardImage.className = 'playlistCard-image'
 
 playlistCardImage.setAttribute(
   'style',
@@ -27,20 +28,22 @@ document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
 
+
+// skeletonCard is used for visual confirmation that a new playlist is being 
+// added to playlistTimeline; after data is retrieved from API fetches element 
+// tag attributes are replaced to replicate those of playlistCard
 var skeletonCard = document.createElement('a')
-skeletonCard.classList.add('sample-card')
+skeletonCard.classList.add('skeleton-card-template')
 var skeletonHeader = document.createElement('h4')
 skeletonHeader.classList.add('skeleton-card', 'skeleton-card-text')
 var skeletonImage = document.createElement('img')
-skeletonImage.classList.add('sample-img', 'skeleton-card')
+skeletonImage.classList.add('skeleton-card', 'skeleton-card-img')
 
 skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
-console.log('skeletonCard: ', skeletonCard)
-
 // needs individual API keys in line below
-var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
+var apiKey = 'INSERT API KEY HERE'
 
 const options = {
   SpotifyAPI: {
@@ -76,7 +79,6 @@ inputContainerEl.addEventListener('click', async function(e) {
   let textAreaInput = textArea.value
   if (e.target.id === 'fetch-button'){
     var skelClone = skeletonCard.cloneNode(true)
-
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
   }
@@ -142,24 +144,20 @@ async function injectPlaylistContainer(emotion) {
   let index = Math.floor(Math.random() * playlists.items.length)
   var playlistDatum = playlists.items[index].data
 
-  var loadingCard = playListContainerEl.firstChild
-  // loadingCard.classList.add('card', 'h-100', 'p-3', 'my-3', 'playlistCard')
-  loadingCard.className = "card h-100 p-3 my-3 playlistCard"
-  // loadingCard.childNodes = 
-  console.log('loadingCard: ', loadingCard)
-  // var clone = playlistCard.cloneNode(true)
+  // the first appended child whenever a user clicks fetch-button within 
+  // eventListener will be a skeleton card
+  var loadedCard = playListContainerEl.firstChild
+  
+  // previous element attributes of loadedCard from when it assumed 
+  // skeletonCard role are replaced to those of a playlistCard now
+  loadedCard.className = "card h-100 p-3 my-3 playlistCard"
 
-  var [playListCardHeader, playListCardImage] = loadingCard.childNodes
+  var [playListCardHeader, playListCardImage] = loadedCard.childNodes
   playListCardHeader.className = 'playlistCard-header'
   playListCardHeader.innerText = playlistDatum.name
-  playListCardImage.classList.remove('sample-img', 'skeleton-card')
-  playListCardImage.setAttribute('src', playlistDatum.images.items[0].sources[0].url, 'height', '200px', 'width', '200px')
-
-  .setAttribute(
-    'style',
-    'height: 350px, width: 300px'
-  
-  // clone.setAttribute('href', playlistDatum.uri)
+  playListCardImage.className = 'playlistCard-image'
+  playListCardImage.setAttribute('src', playlistDatum.images.items[0].sources[0].url)
+  loadedCard.setAttribute('href', playlistDatum.uri)
 
   var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
 
