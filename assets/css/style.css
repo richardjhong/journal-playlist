@@ -65,12 +65,20 @@ html {
 
 /* Button class for the nav button in the header */
 .btn {
-  color: white;
+  color: var(--pewter);
   background-color: unset;
   height: 60px;
   width: 90px;
   padding: 2px;
   text-decoration: none;
+  font-family: 'Amatic SC' cursive;
+
+}
+
+.btn-emotional-text {
+  background-color: var(--copper);
+  font-family: 'Amatic SC' cursive;
+  font-size: 110%;
 }
 
 /* nav class */
