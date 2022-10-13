@@ -72,3 +72,6 @@ For snackbar implementation, the [example](https://www.w3schools.com/howto/howto
 
 ## Screenshot
 ![screenshot](./assets/images/screenshot.png)
+
+## Livesite
+[Deployed on Github page](https://richardjhong.github.io/journal-playlist/)
