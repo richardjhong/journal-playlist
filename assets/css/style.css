@@ -229,6 +229,25 @@ header h1 {
   font-size: 120%;
 }
 
+/*Added styling to new quote and chart buttons*/
+
+#grab-new-quote-button, #chart-modal-button {
+  background-color: var(--lightochre);
+  border-radius: 4px;
+  border-color: var(--pewter);
+  font-family: 'Amatic SC', cursive;
+  font-weight: bolder;
+  font-size: 110%;
+  padding: 8px;
+}
+
+/*Added different font to modal*/
+
+#my-Chart {
+  font-family: 'Amatic SC', cursive;
+  font-weight: bolder;
+}
+
 #blurb {
   text-align: center;
   color: var(--bistre);
