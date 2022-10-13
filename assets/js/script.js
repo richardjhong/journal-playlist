@@ -9,7 +9,7 @@ var inputContainerEl = document.getElementById('input-container');
 var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
-var currentDay = moment().format('YYYY-MM-DD')
+var [currentDay, currentTime] = new Date().toLocaleString().split(' ')
 var quoteContainerEl = document.getElementById('quote-container')
 var quoteParagraph = document.getElementById('quote-paragraph')
 
