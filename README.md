@@ -1,5 +1,7 @@
 # Journal Playlist
 
+![journal-playlist.gif](./assets/images/screen_recording.gif)
+
 ## Collaborators
 <a href="https://github.com/richardjhong/journal-playlist/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=richardjhong/journal-playlist" />
@@ -67,3 +69,6 @@ This function invokes grabInspirationalQuotes, passes the return quotes array in
 For the skeleton loading animation when a playlist is being fetched, heavy inspiration was taken from this [link](https://javascript.plainenglish.io/adding-skeleton-loading-animation-with-css-e6833f6e1d0a).
 
 For snackbar implementation, the [example](https://www.w3schools.com/howto/howto_js_snackbar.asp) within the w3 link was used as a template.
+
+## Screenshot
+![screenshot](./assets/images/screenshot.png)
