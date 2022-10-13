@@ -361,13 +361,13 @@ function updateChart() {
             hoverOffset: 4
           }]
         },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
+        // options: {
+        //     scales: {
+        //         y: {
+        //             beginAtZero: true
+        //         }
+        //     }
+        // },
     }); 
   } 
   else {
