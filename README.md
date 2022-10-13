@@ -11,7 +11,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 User is able to type into the journal and fetch playlists appropriately from the perceived strongest emotion of the text content.
 
 ## Technologies
-This project uses [Bulma](https://bulma.io/) for the frontend framework and [moment](https://momentjs.com/) for checking time date formating. It also uses three APIs from RapidAPI hub, the [Emotion Analysis API](https://rapidapi.com/twinword/api/emotion-analysis/), the [Famous Quotes API](https://rapidapi.com/saicoder/api/famous-quotes4/) and [Spotify API](https://rapidapi.com/Glavier/api/spotify23/) throughout the app. Lastly [Chart.js](https://www.chartjs.org/) is used for the doughnut chart to give a visual representation of the emotion score tally throughout the day.
+This project uses [Bulma](https://bulma.io/) for the frontend framework and [moment](https://momentjs.com/) for checking time date formating. It also uses three APIs from RapidAPI hub: the [Emotion Analysis API](https://rapidapi.com/twinword/api/emotion-analysis/), the [Famous Quotes API](https://rapidapi.com/saicoder/api/famous-quotes4/), and [Spotify API](https://rapidapi.com/Glavier/api/spotify23/) throughout the app. Lastly [Chart.js](https://www.chartjs.org/) is used for the doughnut chart to give a visual representation of the emotion score tally throughout the day.
 
 ## Architecture
 
