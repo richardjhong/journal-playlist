@@ -9,7 +9,7 @@ var inputContainerEl = document.getElementById('input-container');
 var newQuoteButtonEl = document.getElementById('grab-new-quote-button');
 var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
-var currentDay = moment().format('YYYY-MM-DD')
+var [currentDay, currentTime] = new Date().toLocaleString().split(' ')
 var quoteContainerEl = document.getElementById('quote-container')
 var quoteParagraph = document.getElementById('quote-paragraph')
 
@@ -46,7 +46,7 @@ skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
-var apiKey = 'INSERT API KEY HERE'
+var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
 
 const options = {
   SpotifyAPI: {
