@@ -147,12 +147,6 @@ async function grabStrongestEmotion(textInput) {
   return strongestEmotion[0]
 }
 
-function clearPlaylistContainerContent () {
-  while (playListContainerEl.firstChild) {  
-    playListContainerEl.removeChild(playListContainerEl.firstChild)
-  }
-}
-
 // checks if any playlists are already saved in localStorage within the same 
 // date and populates the playlist container if so
 (function populatePreexistingPlaylistContainer () {
@@ -363,13 +357,6 @@ function updateChart() {
             ],
             hoverOffset: 4
           }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
         },
     }); 
   } 
