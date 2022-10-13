@@ -76,7 +76,6 @@ quoteContainerEl.addEventListener('click', function(e) {
   e.preventDefault()
 
   if (e.target.id === 'grab-new-quote-button') {
-    console.log('new quote button clicked')
     injectQuoteContainer()
   }
 })
@@ -84,14 +83,12 @@ quoteContainerEl.addEventListener('click', function(e) {
 inputContainerEl.addEventListener('click', function(e) {
   e.preventDefault()
   
-  
   let textAreaInput = textArea.value
   if (e.target.id === 'fetch-button' && textArea.value.length > 0){
     var skelClone = skeletonCard.cloneNode(true)
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
   } else if (e.target.id === 'fetch-button' && textArea.value.length === 0) {
-    console.log('need more text')
     showSnackBarNotification()
   }
 })
@@ -146,7 +143,6 @@ async function grabStrongestEmotion(textInput) {
   if (style.display === 'none') {
     document.getElementById('chart-modal-button').style.display = "block"
   }
-
 
   return strongestEmotion[0]
 }
@@ -303,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (event) => {
     const e = event || window.event;
 
-    if (e.key === 27) { // Escape key
+    if (e.keyCode === 27) { // Escape key
       closeAllModals();
     }
   });
