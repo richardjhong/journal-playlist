@@ -13,7 +13,6 @@ User is able to type into the journal and fetch playlists appropriately from the
 ## Technologies
 This project uses [Bulma](https://bulma.io/) for the frontend framework and [moment](https://momentjs.com/) for checking time date formating. It also uses three APIs from RapidAPI hub, the [Emotion Analysis API](https://rapidapi.com/twinword/api/emotion-analysis/), the [Famous Quotes API](https://rapidapi.com/saicoder/api/famous-quotes4/) and [Spotify API](https://rapidapi.com/Glavier/api/spotify23/) throughout the app. Lastly [Chart.js](https://www.chartjs.org/) is used for the doughnut chart to give a visual representation of the emotion score tally throughout the day.
 
-
 ## Architecture
 
 At a high level, the user types into the journal text and Emotion Analysis API analyzes the text. After giving a range of scores amongst six different emotions (joy, anger, sadness, disgust, fear, surprise), the highest scoring emotion i.e. the strongest emotion is extracted as a keyword. It is also stored within localStorage which keeps tally of each respective emotions count throughout the day. This same keyword is then put into the Spotify API and 5 playlists are fetched based on appropriate matching; a randomized choice is then stored into the localStorage and then added to the playlist timeline. 
@@ -64,5 +63,7 @@ This function takes in argument quotes from injectQuoteContainer. With the data 
 ### injectQuoteContainer
 This function invokes grabInspirationalQuotes, passes the return quotes array into and invokes injectNewQuotes. Lastly a setTimeout calls injectQuoteContainer to repeat the process every 5 minutes (after 10 quotes have been displayed every 30 seconds).
 
-
+## Sources
 For the skeleton loading animation when a playlist is being fetched, heavy inspiration was taken from this [link](https://javascript.plainenglish.io/adding-skeleton-loading-animation-with-css-e6833f6e1d0a).
+
+For snackbar implementation, the [example](https://www.w3schools.com/howto/howto_js_snackbar.asp) within the w3 link was used as a template.
