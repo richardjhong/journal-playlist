@@ -89,7 +89,7 @@ inputContainerEl.addEventListener('click', function(e) {
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
   } else if (e.target.id === 'fetch-button' && textArea.value.length === 0) {
-    showSnackBarNotification()
+    showSnackBarNotification('emptyText')
   }
 })
 
@@ -98,11 +98,24 @@ if (localStorage.getItem("emotionCollection")) {
   document.getElementById('chart-modal-button').style.display = "block"
 }
 
-function showSnackBarNotification() {
-  var snackBar = document.getElementById("snackbar");
-  snackBar.className = "show";
 
-  setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+
+function showSnackBarNotification(type, emotion = null) {
+  var snackBar = document.getElementById("snackbar");
+  
+  if (type === 'emptyText') {
+    snackBar.innerText = 'You must input a journal entry to evaluate before generating a playlist!'
+    snackBar.className = "show";
+    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
+  }
+
+  // gives user insight on how the textInput correlates to the playlist being 
+  // retrieved
+  if (type === 'emotionSearchQuery') {
+    snackBar.innerText = `I think that you are feeling ${emotion}` 
+    snackBar.className = "show";
+    setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 5000);
+  }
 }
 
 
@@ -132,6 +145,7 @@ async function grabStrongestEmotion(textInput) {
   localStorage.setItem("emotionCollection", JSON.stringify(emotionCollection))
 
   updateChart()
+  showSnackBarNotification("emotionSearchQuery", strongestEmotion[0])
 
   // Bulma modal boilerplate code adds evenListeners based on 
   // 'DOMContentLoaded'. To not disturb its behavior, chart-modal-button
