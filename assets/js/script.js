@@ -11,6 +11,8 @@ var playListContainerEl = document.createElement('div')
 playListContainerEl.className = 'playlist-container'
 var currentDay = moment().format('YYYY-MM-DD')
 var quoteContainerEl = document.getElementById('quote-container')
+var quoteParagraph = document.getElementById('quote-paragraph')
+
 
 var playlistCard = document.createElement('a')
 playlistCard.setAttribute("class", "card h-100 p-3 my-3 playlistCard has-background-white-ter")
@@ -44,7 +46,7 @@ skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
-var apiKey = 'PLACE API KEY HERE'
+var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
 
 const options = {
   SpotifyAPI: {
@@ -70,35 +72,40 @@ const options = {
   }
 };
 
-inputContainerEl.addEventListener('click', async function(e) {
+quoteContainerEl.addEventListener('click', function(e) {
   e.preventDefault()
 
   if (e.target.id === 'grab-new-quote-button') {
+    console.log('new quote button clicked')
     injectQuoteContainer()
   }
+})
 
+inputContainerEl.addEventListener('click', function(e) {
+  e.preventDefault()
+  
+  
   let textAreaInput = textArea.value
-  if (e.target.id === 'fetch-button', textArea.value != ""){
+  if (e.target.id === 'fetch-button' && textArea.value.length > 0){
     var skelClone = skeletonCard.cloneNode(true)
     playListContainerEl.prepend(skelClone)
     injectPlaylistContainer(textAreaInput)
-  } 
-})
-
-//Decoupled the event listner for the log button from the input container so as to not be called when clicking anything else
-button.addEventListener('click', async function(e){
-  e.preventDefault()
-
-  if (e.target.id === 'fetch-button', textArea.value === ""){
-    console.log("You must input a journal entry to evaluate first before ");
-    textArea.setAttribute('placeholder', "You must input a journal entry to evaluate before generating a playlist!")
-
+  } else if (e.target.id === 'fetch-button' && textArea.value.length === 0) {
+    console.log('need more text')
+    showSnackBarNotification()
   }
 })
 
 if (localStorage.getItem("emotionCollection")) {
   updateChart()
   document.getElementById('chart-modal-button').style.display = "block"
+}
+
+function showSnackBarNotification() {
+  var snackBar = document.getElementById("snackbar");
+  snackBar.className = "show";
+
+  setTimeout(function(){ snackBar.className = snackBar.className.replace("show", ""); }, 3000);
 }
 
 
@@ -234,7 +241,7 @@ function grabInspirationalQuote() {
 function injectNewQuote(quotes) {
   let index = Math.floor(Math.random() * quotes.length)
   let currentQuote = quotes[index]
-  quoteContainerEl.innerText = `${currentQuote.text} - ${currentQuote.author}`
+  quoteParagraph.innerText = `${currentQuote.text} - ${currentQuote.author}`
 
   quotes.splice(index , 1)
 
@@ -296,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (event) => {
     const e = event || window.event;
 
-    if (e.keyCode === 27) { // Escape key
+    if (e.key === 27) { // Escape key
       closeAllModals();
     }
   });

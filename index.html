@@ -33,14 +33,14 @@
             rhytmic form and it has the ability to change or enhance our moods and feelings.                  
         </h2>
         <h2>
-          Input your thoughts, as breif or as thorough as you would like, and evaluate your feelings to get
-            spotify playlist recommended to you.
+          Input your thoughts, as brief or as thorough as you would like, and evaluate your feelings to get
+            Spotify playlist recommended to you.
         </h2>
     </div>
     <div class="row">
-      <aside class="col1">
+      <aside class="col1" id="quote-container">
         <h2>Quote of the Day</h2>
-        <p class="quote-container" id="quote-container">Placeholder for incoming quote</p>
+        <p class="quote-paragraph" id="quote-paragraph">Placeholder for incoming quote</p>
         <button id="grab-new-quote-button">NEW QUOTE</button>
         <button class="js-modal-trigger" data-target="doughnut-chart-modal" id="chart-modal-button">
           Open Chart
@@ -53,13 +53,13 @@
           <button class="button is-rounded is-fullwidth" id="fetch-button">Log Journal</button>
         </div>
       </div>
-      <div class="flex-column" id="users"></div>
-      </div>
+      
       <div class="container-fluid col3" id="form-container">
         <div id="content-parent">
         </div>
       </div>
     </div>
+  </container>
 
   <div id="doughnut-chart-modal" class="modal">
     <div class="modal-background"></div>
@@ -68,6 +68,8 @@
     </div>
     <button class="modal-close is-large" aria-label="close"></button>
   </div>
+
+  <div id="snackbar">You must input a journal entry to evaluate before generating a playlist!</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
