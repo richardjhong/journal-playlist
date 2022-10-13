@@ -22,4 +22,16 @@ A doughnut chart is created either if there is an existing localStorage collecti
 
 Upon clicking the quotes button, the Famous Quotes API retrieves 10 quotes. One randomly picked quote displays and it's removed from the pool selection of remaining quotes. Every 30 seconds another randomly picked quote displays and it's then removed from the pool selection of remaining quotes. After 5 minutes (10 quotes that are displayed 30 seconds each is equal to 5 minutes), the Famous Quotes API grabs another 10 quotes and the process of randomizing, etc. repeats.
 
+For more detailed information about the API data retrieval/handling:
+
+- grabEmotions
+- grabStrongestEmotion
+- grabPlaylists
+- injectPlaylistContainer
+- grabInspirationalQuote
+- injectNewQuote
+- injectQuoteContainer
+
+### grabEmotions
+
 For the skeleton loading animation when a playlist is being fetched, heavy inspiration was taken from this [link](https://javascript.plainenglish.io/adding-skeleton-loading-animation-with-css-e6833f6e1d0a).
