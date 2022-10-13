@@ -46,7 +46,7 @@ skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
-var apiKey = '2ece9e8550msh088597d0eac2b3fp18c132jsn07f0c44b7eb5'
+var apiKey = 'INSERT API KEY HERE'
 
 const options = {
   SpotifyAPI: {
