@@ -33,5 +33,36 @@ For more detailed information about the API data retrieval/handling:
 - injectQuoteContainer
 
 ### grabEmotions
+grabEmotions uses the textInput from the journal entry and returns a response of the emotion score range associated with the text. A sample response would be similar to:
+
+```
+emotion_scores: {
+  joy:0.13447999002654
+  sadness:0.022660050917593
+  surprise:0.0087308825457527
+  fear:0
+  anger:0
+  disgust:0
+}
+``` 
+
+### grabStrongestEmotion
+grabStrongestEmotion depends on the return data of grabEmotions, hence it is wrapped in async itself and await is used with invoking the grabEmotions function within. From here, the highest score value is recorded and the emotion key related is stored within localStorage in the emotionCollection object. The tally of cumulative score to respective emotions are also tracked wtihin localStorage. This also invokes updateChart. Next there is a check to see if the 'chart-modal-button' is visible; if not, then make the button visible. Lastly, the strongestEmotion is returned.
+
+### grabPlaylists
+Similar to grabStrongestEmotion, grabPlaylists' fetch call is dependent on waiting for return data from another function; in this case strongestEmotion from grabStrongestEmotion needs to be returned within the async/await. After this is done, an object is returned with playlists.
+
+### injectPlaylistContainer
+Once the return from the await grabPlaylists is stored within playlists, a single playlist is randomly chosen for the next playlist to add to the timeline. At the time of pressing the 'Log Journal' button, a skeleton animation card is loaded into the timeline to visually let the user know that while the playlist retrieval is not ready at the time, there is one incoming. By the time injectPlaylistContainer is called the data is ready to loaded into that same card. As such, the skeleton card changes and takes the attributes of a playlistCard. Next the newly created playlistCard information is either prepended into an existing collection arr (localStorage object named playlistTime) or initiated as the first entry within an array. The collection is then stored into localStorage.
+
+### grabInspirationalQuote
+This function returns an array with 10 quotes.
+
+### injectNewQuote
+This function takes in argument quotes from injectQuoteContainer. With the data (10 quotes all in an array), one is randomly selected and displayed to the page. The quote is then removed from the quotes array. Every 30 seconds, another randomly chosen quote from quotes array is displayed and extracted from the quotes array. When there are no more quotes, this function exits.
+
+### injectQuoteContainer
+This function invokes grabInspirationalQuotes, passes the return quotes array into and invokes injectNewQuotes. Lastly a setTimeout calls injectQuoteContainer to repeat the process every 5 minutes (after 10 quotes have been displayed every 30 seconds).
+
 
 For the skeleton loading animation when a playlist is being fetched, heavy inspiration was taken from this [link](https://javascript.plainenglish.io/adding-skeleton-loading-animation-with-css-e6833f6e1d0a).
