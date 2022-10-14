@@ -22,11 +22,6 @@ var playlistCardImage = document.createElement('img')
 playlistCardHeader.className = 'playlistCard-header'
 playlistCardImage.className = 'playlistCard-image'
 
-playlistCardImage.setAttribute(
-  'style',
-  'height: 350px; width: 300px'
-);
-
 document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
@@ -46,7 +41,7 @@ skeletonCard.appendChild(skeletonHeader)
 skeletonCard.appendChild(skeletonImage)
 
 // needs individual API keys in line below
-var apiKey = '5c547f3788msh007f4139bb62e23p1dce91jsnd655fb0d4e13'
+var apiKey = 'INSERT API KEY HERE'
 
 const options = {
   SpotifyAPI: {
@@ -212,6 +207,7 @@ async function injectPlaylistContainer(emotion) {
   playListCardHeader.innerText = playlistDatum.name
   playListCardImage.className = 'playlistCard-image'
   playListCardImage.setAttribute('src', playlistDatum.images.items[0].sources[0].url)
+  
   loadedCard.setAttribute('href', playlistDatum.uri)
 
   var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
