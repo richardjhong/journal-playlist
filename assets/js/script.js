@@ -251,7 +251,7 @@ function injectNewQuote(quotes) {
 
   setTimeout(() => {
     injectNewQuote(quotes)
-  }, 10000)
+  }, 30000)
 }
 
 async function injectQuoteContainer() {
@@ -259,7 +259,7 @@ async function injectQuoteContainer() {
   
   injectNewQuote(quotes)
 
-  setTimeout(injectQuoteContainer, 120000);
+  setTimeout(injectQuoteContainer, 300000);
 }
 
 // boilerplate code associated with Bulma modal, function addData and onwards 
