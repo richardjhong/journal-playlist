@@ -22,11 +22,6 @@ var playlistCardImage = document.createElement('img')
 playlistCardHeader.className = 'playlistCard-header'
 playlistCardImage.className = 'playlistCard-image'
 
-playlistCardImage.setAttribute(
-  'style',
-  'height: 350px; width: 300px'
-);
-
 document.getElementById('content-parent').appendChild(playListContainerEl)
 playlistCard.appendChild(playlistCardHeader)
 playlistCard.appendChild(playlistCardImage)
@@ -212,6 +207,7 @@ async function injectPlaylistContainer(emotion) {
   playListCardHeader.innerText = playlistDatum.name
   playListCardImage.className = 'playlistCard-image'
   playListCardImage.setAttribute('src', playlistDatum.images.items[0].sources[0].url)
+  
   loadedCard.setAttribute('href', playlistDatum.uri)
 
   var playlistTimeline = JSON.parse(localStorage.getItem("playlistTimeline")) || {}
@@ -255,7 +251,7 @@ function injectNewQuote(quotes) {
 
   setTimeout(() => {
     injectNewQuote(quotes)
-  }, 30000)
+  }, 10000)
 }
 
 async function injectQuoteContainer() {
@@ -263,7 +259,7 @@ async function injectQuoteContainer() {
   
   injectNewQuote(quotes)
 
-  setTimeout(injectQuoteContainer, 300000);
+  setTimeout(injectQuoteContainer, 120000);
 }
 
 // boilerplate code associated with Bulma modal, function addData and onwards 

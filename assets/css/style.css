@@ -65,6 +65,10 @@ textarea {
     padding-left: 1%;
 }
 
+.playlistCard-image {
+  height: 350px;
+  width: 300px;
+}
 
 .playlist-container {
   display: flex;
